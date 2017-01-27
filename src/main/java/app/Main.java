@@ -20,9 +20,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Galin on 21.1.2017 г..
- */
 public class Main {
     private static final String YOUTUBE_VIDEOS_ROOT_URL = "https://www.youtube.com/watch?v=";
 
@@ -36,8 +33,8 @@ public class Main {
         System.out.print("Enter playlist url:");
         Scanner scanIn = new Scanner(System.in);
 
-        //String urlSourceCode=getUrlSourceCode(scanIn.nextLine());
-        String urlSourceCode = getUrlSourceCode("https://www.youtube.com/playlist?list=PLIqrg0Qwbpopx_wfXRWrQeAqmLtyxPrKk");
+        String urlSourceCode=getUrlSourceCode(scanIn.nextLine());
+        //String urlSourceCode = getUrlSourceCode("https://www.youtube.com/playlist?list=PLIqrg0Qwbpopx_wfXRWrQeAqmLtyxPrKk");
 
         Pattern pattern = Pattern.compile(PLAYLIST_VIDEO_PATTERN);
         //Matcher matcher = pattern.matcher(readFile(FILE_PATH));
