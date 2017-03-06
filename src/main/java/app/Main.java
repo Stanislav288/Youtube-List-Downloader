@@ -4,9 +4,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
-import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptJobManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 
 import javax.script.ScriptException;
 import java.awt.*;
@@ -25,21 +23,17 @@ public class Main {
 
     private static final String PLAYLIST_VIDEO_PATTERN = "data-video-id=\"(.+?)\"";
 
-    private static final String FILE_PATH = "page_source.txt";
-
     private static final String YOUTUBE_MP3_CONVERTER = "http://www.youtube-mp3.org/";
 
     public static void main(String[] args) throws IOException {
-        System.out.print("Enter playlist url:");
-        Scanner scanIn = new Scanner(System.in);
+        ApplicationMenu.launch();
 
-        String urlSourceCode=getUrlSourceCode(scanIn.nextLine());
+       // String urlSourceCode=getUrlSourceCode(scanIn.nextLine());
         //String urlSourceCode = getUrlSourceCode("https://www.youtube.com/playlist?list=PLIqrg0Qwbpopx_wfXRWrQeAqmLtyxPrKk");
 
         Pattern pattern = Pattern.compile(PLAYLIST_VIDEO_PATTERN);
         //Matcher matcher = pattern.matcher(readFile(FILE_PATH));
         Matcher matcher = pattern.matcher(urlSourceCode);
-        //Matcher matcher = pattern.matcher(urlSourceCode);
 
         List<String> videos = new LinkedList<>();
         while (matcher.find()) {
@@ -74,20 +68,7 @@ public class Main {
         return a.toString();
     }
 
-    private static String readFile(String filePath) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
 
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            String data = sb.toString();
-            return data;
-        }
-    }
 
     private static void openUrl(String url) {
         try {
@@ -97,11 +78,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*File file = new File("C:\\Users\\Galin\\Desktop\\MyProject\\chromedriver.exe");
-        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-        WebDriver driver = new ChromeDriver();
-        // Go to the Google Suggest home page
-        driver.get(url);*/
     }
 
     private static void submitVideos(List<String> videos) throws ScriptException, IOException, InterruptedException {
@@ -112,11 +88,6 @@ public class Main {
 
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.setCssErrorHandler(new SilentCssErrorHandler());
-
-        //webClient.setJavaScriptErrorListener(new JavaScriptErrorListener(){});
-        // webClient.setJavaScriptTimeout();
-        //  webClient.getCookieManager().setCookiesEnabled(false);
-        // webClient.getOptions().setUseInsecureSSL(true);
 
         int position = 1;
         for (String video : videos) {
